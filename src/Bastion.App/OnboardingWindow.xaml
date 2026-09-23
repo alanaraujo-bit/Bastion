@@ -1,0 +1,129 @@
+<Window x:Class="Bastion.App.OnboardingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="clr-namespace:Bastion.Ui.Controls;assembly=Bastion.Ui"
+        xmlns:loc="clr-namespace:Bastion.Ui.Localization;assembly=Bastion.Ui"
+        Title="Bastion" Width="600" Height="600"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" ShowInTaskbar="True" WindowStartupLocation="CenterScreen"
+        FontFamily="{DynamicResource Font.Ui}">
+    <Grid Margin="20">
+        <Border Background="{DynamicResource Brush.Surface}" BorderBrush="{DynamicResource Brush.Border}" BorderThickness="1" CornerRadius="18">
+            <Border.Effect><DropShadowEffect BlurRadius="40" ShadowDepth="10" Direction="270" Opacity="0.3" Color="Black" /></Border.Effect>
+            <Grid Margin="40,34,40,28">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Progress dots -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Ellipse x:Name="Dot0" Width="7" Height="7" Margin="4,0" Fill="{DynamicResource Brush.Accent}" />
+                    <Ellipse x:Name="Dot1" Width="7" Height="7" Margin="4,0" Fill="{DynamicResource Brush.BorderStrong}" />
+                    <Ellipse x:Name="Dot2" Width="7" Height="7" Margin="4,0" Fill="{DynamicResource Brush.BorderStrong}" />
+                    <Ellipse x:Name="Dot3" Width="7" Height="7" Margin="4,0" Fill="{DynamicResource Brush.BorderStrong}" />
+                    <Ellipse x:Name="Dot4" Width="7" Height="7" Margin="4,0" Fill="{DynamicResource Brush.BorderStrong}" />
+                </StackPanel>
+
+                <!-- ===== Step content ===== -->
+                <Grid Grid.Row="1" Margin="0,24,0,0">
+                    <!-- 0 Welcome -->
+                    <StackPanel x:Name="Step0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Border Width="88" Height="88" CornerRadius="24" Background="{DynamicResource Brush.AccentSoft}" HorizontalAlignment="Center">
+                            <ui:BrandMark Width="52" Height="52" />
+                        </Border>
+                        <TextBlock Text="{loc:T Onb_WelcomeTitle}" Style="{DynamicResource Text.Display}" HorizontalAlignment="Center" Margin="0,22,0,0" />
+                        <TextBlock Text="{loc:T Onb_WelcomeSub}"
+                                   Style="{DynamicResource Text.Secondary}" TextAlignment="Center" HorizontalAlignment="Center" MaxWidth="380" Margin="0,10,0,0" />
+                    </StackPanel>
+
+                    <!-- 1 How it works -->
+                    <StackPanel x:Name="Step1" VerticalAlignment="Center" Visibility="Collapsed">
+                        <TextBlock Text="{loc:T Onb_HowTitle}" Style="{DynamicResource Text.Display}" FontSize="22" HorizontalAlignment="Center" />
+                        <StackPanel Margin="0,22,0,0">
+                            <Grid Margin="0,0,0,16">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Width="42" Height="42" CornerRadius="11" Background="{DynamicResource Brush.AccentSoft}">
+                                    <TextBlock Text="&#xE710;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="17" Foreground="{DynamicResource Brush.Accent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{loc:T Onb_How1Title}" Style="{DynamicResource Text.Subtitle}" FontSize="14" />
+                                    <TextBlock Text="{loc:T Onb_How1Sub}" Style="{DynamicResource Text.Secondary}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid Margin="0,0,0,16">
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Width="42" Height="42" CornerRadius="11" Background="{DynamicResource Brush.AccentSoft}">
+                                    <TextBlock Text="&#xE72E;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="17" Foreground="{DynamicResource Brush.Accent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{loc:T Onb_How2Title}" Style="{DynamicResource Text.Subtitle}" FontSize="14" />
+                                    <TextBlock Text="{loc:T Onb_How2Sub}" Style="{DynamicResource Text.Secondary}" />
+                                </StackPanel>
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Width="42" Height="42" CornerRadius="11" Background="{DynamicResource Brush.AccentSoft}">
+                                    <TextBlock Text="&#xE928;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="17" Foreground="{DynamicResource Brush.Accent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{loc:T Onb_How3Title}" Style="{DynamicResource Text.Subtitle}" FontSize="14" />
+                                    <TextBlock Text="{loc:T Onb_How3Sub}" Style="{DynamicResource Text.Secondary}" />
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- 2 Create password -->
+                    <StackPanel x:Name="Step2" VerticalAlignment="Center" Visibility="Collapsed">
+                        <TextBlock Text="{loc:T Onb_PwdTitle}" Style="{DynamicResource Text.Display}" FontSize="22" HorizontalAlignment="Center" />
+                        <TextBlock Text="{loc:T Onb_PwdSub}"
+                                   Style="{DynamicResource Text.Secondary}" TextAlignment="Center" HorizontalAlignment="Center" MaxWidth="400" Margin="0,8,0,0" />
+                        <Border Height="46" CornerRadius="10" Background="{DynamicResource Brush.SurfaceAlt}" BorderBrush="{DynamicResource Brush.Border}" BorderThickness="1.5" Margin="0,20,0,0">
+                            <PasswordBox x:Name="Pwd1" BorderThickness="0" Background="Transparent" Padding="14,0" VerticalContentAlignment="Center" FontSize="14" Foreground="{DynamicResource Brush.Text}" CaretBrush="{DynamicResource Brush.Accent}" PasswordChanged="Pwd_Changed" />
+                        </Border>
+                        <Border x:Name="StrengthTrack" Height="4" CornerRadius="2" Background="{DynamicResource Brush.SurfaceHover}" Margin="2,8,2,0">
+                            <Border x:Name="StrengthFill" HorizontalAlignment="Left" CornerRadius="2" Background="{DynamicResource Brush.Danger}" Width="0" />
+                        </Border>
+                        <Border Height="46" CornerRadius="10" Background="{DynamicResource Brush.SurfaceAlt}" BorderBrush="{DynamicResource Brush.Border}" BorderThickness="1.5" Margin="0,12,0,0">
+                            <PasswordBox x:Name="Pwd2" BorderThickness="0" Background="Transparent" Padding="14,0" VerticalContentAlignment="Center" FontSize="14" Foreground="{DynamicResource Brush.Text}" CaretBrush="{DynamicResource Brush.Accent}" />
+                        </Border>
+                        <TextBlock x:Name="Step2Error" Style="{DynamicResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}" Margin="2,10,0,0" Visibility="Collapsed" />
+                    </StackPanel>
+
+                    <!-- 3 Recovery -->
+                    <StackPanel x:Name="Step3" VerticalAlignment="Center" Visibility="Collapsed">
+                        <TextBlock Text="{loc:T Onb_RecTitle}" Style="{DynamicResource Text.Display}" FontSize="22" HorizontalAlignment="Center" />
+                        <TextBlock Text="{loc:T Onb_RecSub}"
+                                   Style="{DynamicResource Text.Secondary}" TextAlignment="Center" HorizontalAlignment="Center" MaxWidth="400" Margin="0,8,0,0" />
+                        <TextBlock Text="{loc:T Rec_Question}" Style="{DynamicResource Text.Caption}" Margin="2,18,0,6" />
+                        <TextBox x:Name="RecQuestion" Style="{DynamicResource Input}" Height="44" />
+                        <TextBlock Text="{loc:T Rec_Answer}" Style="{DynamicResource Text.Caption}" Margin="2,12,0,6" />
+                        <Border Height="44" CornerRadius="10" Background="{DynamicResource Brush.SurfaceAlt}" BorderBrush="{DynamicResource Brush.Border}" BorderThickness="1.5">
+                            <PasswordBox x:Name="RecAnswer" BorderThickness="0" Background="Transparent" Padding="14,0" VerticalContentAlignment="Center" FontSize="14" Foreground="{DynamicResource Brush.Text}" CaretBrush="{DynamicResource Brush.Accent}" />
+                        </Border>
+                    </StackPanel>
+
+                    <!-- 4 Done -->
+                    <StackPanel x:Name="Step4" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed">
+                        <Border Width="88" Height="88" CornerRadius="24" Background="{DynamicResource Brush.SuccessSoft}" HorizontalAlignment="Center">
+                            <TextBlock Text="&#xE73E;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="40" Foreground="{DynamicResource Brush.Success}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <TextBlock Text="{loc:T Onb_DoneTitle}" Style="{DynamicResource Text.Display}" HorizontalAlignment="Center" Margin="0,22,0,0" />
+                        <TextBlock Text="{loc:T Onb_DoneSub}" Style="{DynamicResource Text.Secondary}" TextAlignment="Center" HorizontalAlignment="Center" MaxWidth="360" Margin="0,10,0,0" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Footer -->
+                <Grid Grid.Row="2" Margin="0,20,0,0">
+                    <Button x:Name="BackBtn" Style="{DynamicResource Btn.Ghost}" Content="{loc:T Common_Back}" HorizontalAlignment="Left" Click="Back_Click" Visibility="Collapsed" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="SkipBtn" Style="{DynamicResource Btn.Ghost}" Content="{loc:T Common_Skip}" Click="Skip_Click" Visibility="Collapsed" Margin="0,0,8,0" />
+                        <Button x:Name="NextBtn" Style="{DynamicResource Btn.Primary}" Content="{loc:T Onb_GetStarted}" MinWidth="150" Click="Next_Click" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

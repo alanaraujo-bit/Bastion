@@ -1,0 +1,82 @@
+<UserControl x:Class="Bastion.App.Pages.AppsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:Bastion.App.Converters"
+             xmlns:loc="clr-namespace:Bastion.Ui.Localization;assembly=Bastion.Ui"
+             FontFamily="{DynamicResource Font.Ui}">
+    <UserControl.Resources>
+        <conv:BoolToVisibility x:Key="Bool2Vis" />
+    </UserControl.Resources>
+    <Grid Margin="26,4,26,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,14">
+            <TextBox x:Name="Search" Style="{DynamicResource Input}" Width="260" Height="40" HorizontalAlignment="Left" TextChanged="Search_Changed" />
+            <TextBlock IsHitTestVisible="False" Text="{loc:T Apps_Search}" Margin="14,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"
+                       Foreground="{DynamicResource Brush.TextTertiary}" x:Name="SearchPlaceholder" />
+            <Button x:Name="AddBtn" Style="{DynamicResource Btn.Primary}" HorizontalAlignment="Right" Height="40" Click="Add_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE710;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="14" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <TextBlock Text="{loc:T Apps_Add}" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,0,20">
+            <StackPanel>
+                <Border x:Name="EmptyState" Style="{DynamicResource Card}" Padding="28" Visibility="Collapsed">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="{loc:T Apps_EmptyTitle}" Style="{DynamicResource Text.Subtitle}" HorizontalAlignment="Center" />
+                        <TextBlock Text="{loc:T Apps_EmptySub}" Style="{DynamicResource Text.Secondary}" Margin="0,4,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <ItemsControl x:Name="List">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{DynamicResource Card}" Padding="16" Margin="0,0,0,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" Width="46" Height="46" CornerRadius="12" Background="{DynamicResource Brush.SurfaceAlt}">
+                                        <Grid>
+                                            <Image Source="{Binding Icon}" Width="28" Height="28" Visibility="{Binding HasIcon, Converter={StaticResource Bool2Vis}}" RenderOptions.BitmapScalingMode="HighQuality" />
+                                            <TextBlock Text="&#xECAA;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="19" Foreground="{DynamicResource Brush.TextTertiary}"
+                                                       HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding HasIcon, Converter={StaticResource Bool2Vis}, ConverterParameter=invert}" />
+                                        </Grid>
+                                    </Border>
+
+                                    <StackPanel Grid.Column="1" Margin="14,0,12,0" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding DisplayName}" Style="{DynamicResource Text.Subtitle}" FontSize="14.5" TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding Path}" Style="{DynamicResource Text.Caption}" TextTrimming="CharacterEllipsis" Margin="0,2,0,0" />
+                                        <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                                            <Border CornerRadius="5" Padding="7,3" Background="{DynamicResource Brush.SurfaceAlt}">
+                                                <TextBlock Text="{Binding StatusText}" Style="{DynamicResource Text.Caption}" />
+                                            </Border>
+                                            <TextBlock Text="{Binding PolicyText}" Style="{DynamicResource Text.Caption}" VerticalAlignment="Center" Margin="10,0,0,0" />
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <ToggleButton Style="{DynamicResource Switch}" IsChecked="{Binding Enabled, Mode=OneWay}" VerticalAlignment="Center"
+                                                      Click="Enabled_Click" Tag="{Binding}" ToolTip="{loc:T Tip_OnOff}" />
+                                        <Button Style="{DynamicResource Btn.Icon}" Content="&#xE713;" Margin="8,0,0,0" Click="Configure_Click" Tag="{Binding}" ToolTip="{loc:T Tip_Configure}" />
+                                        <Button Style="{DynamicResource Btn.Icon}" Content="&#xED25;" Click="OpenLocation_Click" Tag="{Binding}" ToolTip="{loc:T Tip_OpenLocation}" />
+                                        <Button Style="{DynamicResource Btn.Icon}" Content="&#xE74D;" Click="Remove_Click" Tag="{Binding}" ToolTip="{loc:T Tip_Remove}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

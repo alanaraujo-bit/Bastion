@@ -1,0 +1,37 @@
+<Window x:Class="Bastion.App.RecoveryDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:Bastion.Ui.Localization;assembly=Bastion.Ui"
+        Title="Bastion" Width="420" SizeToContent="Height"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        FontFamily="{DynamicResource Font.Ui}">
+    <Grid Margin="20">
+        <Border Background="{DynamicResource Brush.Surface}" BorderBrush="{DynamicResource Brush.Border}" BorderThickness="1" CornerRadius="16">
+            <Border.Effect><DropShadowEffect BlurRadius="30" ShadowDepth="7" Direction="270" Opacity="0.26" Color="Black" /></Border.Effect>
+            <StackPanel Margin="28,24,28,22">
+                <TextBlock Text="{loc:T Rec_Title}" Style="{DynamicResource Text.Title}" />
+                <TextBlock Text="{loc:T Rec_Sub}"
+                           Style="{DynamicResource Text.Secondary}" Margin="0,4,0,0" />
+
+                <TextBlock Text="{loc:T Rec_Question}" Style="{DynamicResource Text.Caption}" Margin="2,18,0,6" />
+                <TextBox x:Name="Question" Style="{DynamicResource Input}" Height="42" />
+
+                <TextBlock Text="{loc:T Rec_Answer}" Style="{DynamicResource Text.Caption}" Margin="2,12,0,6" />
+                <Border Height="42" CornerRadius="10" Background="{DynamicResource Brush.SurfaceAlt}" BorderBrush="{DynamicResource Brush.Border}" BorderThickness="1.5">
+                    <PasswordBox x:Name="Answer" BorderThickness="0" Background="Transparent" Padding="14,0" VerticalContentAlignment="Center" FontSize="14" Foreground="{DynamicResource Brush.Text}" CaretBrush="{DynamicResource Brush.Accent}" />
+                </Border>
+
+                <TextBlock x:Name="Error" Style="{DynamicResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}" Margin="2,10,0,0" Visibility="Collapsed" />
+
+                <Grid Margin="0,20,0,0">
+                    <Button x:Name="DisableBtn" Style="{DynamicResource Btn.Ghost}" Content="{loc:T Rec_TurnOff}" HorizontalAlignment="Left" Click="Disable_Click" Visibility="Collapsed" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Style="{DynamicResource Btn.Secondary}" Content="{loc:T Common_Cancel}" Click="Cancel_Click" Margin="0,0,10,0" />
+                        <Button x:Name="SaveBtn" Style="{DynamicResource Btn.Primary}" Content="{loc:T Common_Save}" Click="Save_Click" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

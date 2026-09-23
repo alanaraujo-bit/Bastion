@@ -1,0 +1,48 @@
+<Window x:Class="Bastion.App.ReAuthDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="clr-namespace:Bastion.Ui.Controls;assembly=Bastion.Ui"
+        xmlns:loc="clr-namespace:Bastion.Ui.Localization;assembly=Bastion.Ui"
+        Title="Bastion" Width="384" SizeToContent="Height"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner"
+        FontFamily="{DynamicResource Font.Ui}">
+    <Grid Margin="22">
+        <Border Background="{DynamicResource Brush.Surface}" BorderBrush="{DynamicResource Brush.Border}"
+                BorderThickness="1" CornerRadius="16">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="30" ShadowDepth="7" Direction="270" Opacity="0.26" Color="Black" />
+            </Border.Effect>
+            <StackPanel Margin="28,26,28,24">
+                <Border Width="52" Height="52" CornerRadius="14" Background="{DynamicResource Brush.AccentSoft}" HorizontalAlignment="Center">
+                    <TextBlock Text="&#xE72E;" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="22"
+                               Foreground="{DynamicResource Brush.Accent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+                <TextBlock Style="{DynamicResource Text.Title}" HorizontalAlignment="Center" Margin="0,14,0,0" Text="{loc:T ReAuth_Title}" />
+                <TextBlock x:Name="Sub" Style="{DynamicResource Text.Secondary}" HorizontalAlignment="Center" TextAlignment="Center"
+                           Margin="0,5,0,0" Text="{loc:T ReAuth_Sub}" />
+
+                <Border Margin="0,18,0,0" Height="44" CornerRadius="10" Background="{DynamicResource Brush.SurfaceAlt}"
+                        BorderBrush="{DynamicResource Brush.Border}" BorderThickness="1.5">
+                    <Grid>
+                        <PasswordBox x:Name="Password" BorderThickness="0" Background="Transparent" Padding="14,0,14,0"
+                                     VerticalContentAlignment="Center" FontSize="14" Foreground="{DynamicResource Brush.Text}"
+                                     CaretBrush="{DynamicResource Brush.Accent}" />
+                    </Grid>
+                </Border>
+                <TextBlock x:Name="Error" Style="{DynamicResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}"
+                           Margin="2,8,0,0" Visibility="Collapsed" />
+
+                <Grid Margin="0,18,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Style="{DynamicResource Btn.Secondary}" Content="{loc:T Common_Cancel}" Click="Cancel_Click" />
+                    <Button Grid.Column="2" Style="{DynamicResource Btn.Primary}" Content="{loc:T Common_Confirm}" Click="Confirm_Click" />
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

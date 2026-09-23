@@ -1,0 +1,34 @@
+BASTION — END USER LICENSE AGREEMENT (TEMPLATE)
+================================================
+
+Copyright (c) 2026 Bastion. All rights reserved.
+
+This software is provided as a commercial product. This file is a placeholder
+license intended to be replaced by your final End User License Agreement before
+distribution.
+
+Grant of license
+----------------
+Subject to the terms of your final EULA, you are granted a non-exclusive,
+non-transferable license to install and use Bastion on devices you own or
+control.
+
+Restrictions
+------------
+You may not reverse engineer, decompile, or disassemble the software except to
+the extent permitted by applicable law, nor remove any proprietary notices.
+
+No warranty
+-----------
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Security scope
+--------------
+Bastion restricts access to applications for interactive users of a device. It
+does not defend against an administrator of the device, physical attacks, or
+offline access to storage. See "How protection works" for details.

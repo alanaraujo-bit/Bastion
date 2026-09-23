@@ -1,0 +1,12 @@
+# Build output
+bin/
+obj/
+dist/
+
+# Rider / VS
+.vs/
+.idea/
+*.user
+
+# Local
+*.log

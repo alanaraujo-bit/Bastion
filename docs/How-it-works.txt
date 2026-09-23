@@ -1,0 +1,49 @@
+HOW BASTION PROTECTS YOUR APPLICATIONS
+======================================
+
+The short version
+-----------------
+You pick an application. From then on, whenever anyone tries to open it — from
+the desktop, the Start menu, the taskbar, a shortcut, a file association, or by
+running the program directly — Windows hands the launch to Bastion first.
+Bastion asks for your password (or Windows Hello). Only after you confirm does
+the application actually open. A wrong answer, or Cancel, and it stays shut.
+
+What makes it real protection
+-----------------------------
+Bastion does not just put a password on the shortcuts it creates. It registers
+your chosen program with a built-in Windows feature (Image File Execution
+Options) that intercepts EVERY way the program can be started, before any of the
+program's own code runs. That interception is enforced by Windows itself, not by
+a window that has to stay open.
+
+A background Windows service, running as the system account, owns that
+registration. Because standard users cannot change it, protection cannot be
+switched off just by closing this app or ending a task — it takes your password.
+
+Unlock options
+---------------
+For each app you decide how long an unlock lasts:
+  - Ask every time it opens
+  - Ask again once it fully closes
+  - Stay unlocked for a few minutes
+  - Stay unlocked until you sign out of Windows
+You can also have apps re-lock when you lock Windows (Win+L) or after sleep.
+
+What Bastion is honest about
+----------------------------
+  - An administrator of this PC can always remove Bastion or its protection.
+    Bastion protects against everyday access, not against the machine's own
+    administrator. This is a limit of any software that isn't a signed kernel
+    driver, and we don't pretend otherwise.
+  - Protection is matched by program file name. Two different programs that share
+    the exact same executable name are treated as the same app.
+  - If the protection service is stopped, protected apps will not open until it
+    is running again (it is set to start automatically and restart on failure).
+    This is deliberate: Bastion fails locked, not open.
+
+Your privacy
+------------
+Everything stays on this device. Your password is never stored — only a value
+that lets Bastion check it. The activity history is local and can be cleared at
+any time. Nothing is uploaded.

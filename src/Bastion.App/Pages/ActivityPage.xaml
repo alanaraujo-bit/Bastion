@@ -1,0 +1,59 @@
+<UserControl x:Class="Bastion.App.Pages.ActivityPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:Bastion.App.Converters"
+             xmlns:loc="clr-namespace:Bastion.Ui.Localization;assembly=Bastion.Ui"
+             FontFamily="{DynamicResource Font.Ui}">
+    <UserControl.Resources>
+        <conv:ColorKeyToBrush x:Key="ColorKey" />
+    </UserControl.Resources>
+    <Grid Margin="26,4,26,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0,0,0,14">
+            <TextBlock Text="{loc:T Act_Subtitle}"
+                       Style="{DynamicResource Text.Secondary}" VerticalAlignment="Center" HorizontalAlignment="Left" MaxWidth="440" />
+            <Button x:Name="ClearBtn" Style="{DynamicResource Btn.Ghost}" Content="{loc:T Act_Clear}" HorizontalAlignment="Right" Click="Clear_Click" />
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,0,20">
+            <StackPanel>
+                <Border x:Name="EmptyState" Style="{DynamicResource Card}" Padding="28" Visibility="Collapsed">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="{loc:T Act_EmptyTitle}" Style="{DynamicResource Text.Subtitle}" HorizontalAlignment="Center" />
+                        <TextBlock Text="{loc:T Act_EmptySub}" Style="{DynamicResource Text.Secondary}" Margin="0,4,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <Border x:Name="ListCard" Style="{DynamicResource Card}" Padding="6">
+                    <ItemsControl x:Name="List">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="12,11">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="0" Width="30" Height="30" CornerRadius="8" Background="{DynamicResource Brush.SurfaceAlt}">
+                                        <TextBlock Text="{Binding Glyph}" FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets" FontSize="14"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   Foreground="{Binding ColorKey, Converter={StaticResource ColorKey}}" />
+                                    </Border>
+                                    <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Title}" Style="{DynamicResource Text.Body}" FontSize="13" />
+                                        <TextBlock Text="{Binding Subtitle}" Style="{DynamicResource Text.Caption}" />
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="2" Text="{Binding TimeText}" Style="{DynamicResource Text.Caption}" VerticalAlignment="Center" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
