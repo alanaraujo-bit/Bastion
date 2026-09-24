@@ -57,10 +57,10 @@ dotnet test tests/Bastion.Tests/Bastion.Tests.csproj
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File tools\publish.ps1   # -> dist\app
-iscc installer\Bastion.iss                                   # Inno Setup 6 -> dist\BastionSetup-1.0.0.exe
+iscc installer\Bastion.iss                                   # Inno Setup 6 -> dist\BastionSetup-1.0.1.exe
 ```
 
-Pré-requisito na máquina de destino: **.NET Desktop Runtime 8 (x64)**.
+O instalador é autossuficiente (runtime .NET 8 incluído): não precisa instalar nada antes na máquina de destino.
 
 ## Idiomas
 

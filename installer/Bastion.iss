@@ -2,7 +2,7 @@
 ; Build:  iscc installer\Bastion.iss   (after running tools\publish.ps1)
 
 #define AppName "Bastion"
-#define AppVersion "1.0.0"
+#define AppVersion "1.0.1"
 #define AppPublisher "Bastion"
 #define ServiceName "BastionProtection"
 #define ServiceDisplay "Bastion Protection"
@@ -53,68 +53,94 @@ Name: "{autodesktop}\{#AppName}"; Filename: "{app}\Bastion.App.exe"; Tasks: desk
 Filename: "{app}\Bastion.App.exe"; Description: "Open {#AppName}"; Flags: nowait postinstall skipifsilent
 
 [Code]
-const
-  ATTR_DIRECTORY = $10;
+// The app is published self-contained, so no .NET runtime check is needed.
 
-// Returns True if any Microsoft.WindowsDesktop.App 8.x shared framework is present.
-function DotNetDesktop8Present(): Boolean;
-var
-  rec: TFindRec;
-  base: String;
-  found: Boolean;
-begin
-  found := False;
-  base := ExpandConstant('{commonpf}\dotnet\shared\Microsoft.WindowsDesktop.App');
-  if DirExists(base) then
-  begin
-    if FindFirst(base + '\8.*', rec) then
-    try
-      repeat
-        if (rec.Attributes and ATTR_DIRECTORY) <> 0 then
-          if (rec.Name <> '.') and (rec.Name <> '..') then
-            found := True;
-      until not FindNext(rec);
-    finally
-      FindClose(rec);
-    end;
-  end;
-  Result := found;
-end;
-
-function InitializeSetup(): Boolean;
-begin
-  Result := True;
-  if not DotNetDesktop8Present() then
-  begin
-    if MsgBox('Bastion needs the .NET Desktop Runtime 8 (x64), which was not found.'
-      + #13#10#13#10 + 'Install it from https://dotnet.microsoft.com/download/dotnet/8.0 (Desktop Runtime), then run this setup again.'
-      + #13#10#13#10 + 'Continue anyway?', mbConfirmation, MB_YESNO) = IDNO then
-      Result := False;
-  end;
-end;
-
-procedure RunSc(Params: String);
+function RunSc(Params: String): Integer;
 var
   code: Integer;
 begin
-  Exec(ExpandConstant('{sys}\sc.exe'), Params, '', SW_HIDE, ewWaitUntilTerminated, code);
+  if not Exec(ExpandConstant('{sys}\sc.exe'), Params, '', SW_HIDE, ewWaitUntilTerminated, code) then
+    code := -1;
+  Result := code;
+end;
+
+// True if `sc query` reports the service in the given state (e.g. 'RUNNING', 'STOPPED').
+function ServiceInState(State: String): Boolean;
+var
+  code: Integer;
+begin
+  Result := Exec(ExpandConstant('{cmd}'),
+    '/C ""' + ExpandConstant('{sys}\sc.exe') + '" query {#ServiceName} | "' + ExpandConstant('{sys}\find.exe') + '" "' + State + '""',
+    '', SW_HIDE, ewWaitUntilTerminated, code) and (code = 0);
+end;
+
+// True if the service exists at all (sc query fails with 1060 otherwise).
+function ServiceExists(): Boolean;
+begin
+  Result := RunSc('query {#ServiceName}') = 0;
+end;
+
+// Stops the service (if present) and waits for it to actually stop, so its
+// files are unlocked before we overwrite them.
+procedure StopServiceAndWait();
+var
+  i: Integer;
+begin
+  if not ServiceExists() then Exit;
+  RunSc('stop {#ServiceName}');
+  for i := 1 to 30 do
+  begin
+    if ServiceInState('STOPPED') then Exit;
+    Sleep(500);
+  end;
+end;
+
+function PrepareToInstall(var NeedsRestart: Boolean): String;
+begin
+  StopServiceAndWait();
+  Result := '';
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   bin: String;
+  i, code: Integer;
+  running: Boolean;
 begin
   if CurStep = ssPostInstall then
   begin
     bin := ExpandConstant('{app}\Bastion.Service.exe');
     // Remove any prior instance, then (re)create the service as LocalSystem, auto-start.
-    RunSc('stop {#ServiceName}');
+    StopServiceAndWait();
     RunSc('delete {#ServiceName}');
-    RunSc('create {#ServiceName} binPath= "\"' + bin + '\"" start= auto obj= LocalSystem DisplayName= "{#ServiceDisplay}"');
+    // A deleted service lingers ("marked for deletion", 1072) until its handles close; retry briefly.
+    for i := 1 to 20 do
+    begin
+      code := RunSc('create {#ServiceName} binPath= "\"' + bin + '\"" start= auto obj= LocalSystem DisplayName= "{#ServiceDisplay}"');
+      if code <> 1072 then Break;
+      Sleep(500);
+    end;
     RunSc('description {#ServiceName} "Enforces Bastion application protection. Stopping this service leaves protected apps locked."');
     // Restart automatically if it ever crashes.
     RunSc('failure {#ServiceName} reset= 86400 actions= restart/5000/restart/5000/restart/10000');
     RunSc('start {#ServiceName}');
+
+    // Confirm it really came up instead of assuming it did.
+    running := False;
+    for i := 1 to 30 do
+    begin
+      if ServiceInState('RUNNING') then
+      begin
+        running := True;
+        Break;
+      end;
+      Sleep(500);
+    end;
+    if not running then
+      SuppressibleMsgBox('The Bastion protection service could not be started.'
+        + #13#10#13#10 + 'Restart the PC and open Bastion again. If the problem continues, run this setup again.'
+        + #13#10#13#10 + 'Details are logged in ' + ExpandConstant('{commonappdata}\{#AppName}\service.log') + '.',
+        mbError, MB_OK, IDOK);
   end;
 end;
 

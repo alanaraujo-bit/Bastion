@@ -61,9 +61,7 @@ The installer places files in `Program Files\Bastion`, ACL-protects
 the service, removes **all** IFEO hooks (so protected apps open normally again),
 and deletes the service and files.
 
-> Prerequisite on the target machine: **.NET Desktop Runtime 8 (x64)**. The
-> installer checks for it and points to the download if missing. For a fully
-> self-contained installer, bundle the runtime (see ARCHITECTURE.md → Packaging).
+> No prerequisites: the .NET 8 runtime is bundled inside the installer.
 
 ---
 

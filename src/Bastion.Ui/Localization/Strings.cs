@@ -277,7 +277,7 @@ public static class Strings
         ["Onb_Open"] = "Open Bastion",
         ["Onb_PwdShort"] = "Use at least 6 characters.",
         ["Onb_PwdMismatch"] = "The passwords don't match.",
-        ["Onb_ServiceDown"] = "The protection service isn't running. Please finish installation and try again.",
+        ["Onb_ServiceDown"] = "The protection service isn't running. Restart the PC or run the installer again, then try again.",
         ["Onb_PwdFailed"] = "Couldn't set the password.",
 
         ["Err_Something"] = "Something went wrong",
@@ -544,7 +544,7 @@ public static class Strings
         ["Onb_Open"] = "Abrir o Bastion",
         ["Onb_PwdShort"] = "Use pelo menos 6 caracteres.",
         ["Onb_PwdMismatch"] = "As senhas não coincidem.",
-        ["Onb_ServiceDown"] = "O serviço de proteção não está em execução. Conclua a instalação e tente novamente.",
+        ["Onb_ServiceDown"] = "O serviço de proteção não está em execução. Reinicie o PC ou execute o instalador de novo e tente novamente.",
         ["Onb_PwdFailed"] = "Não foi possível definir a senha.",
 
         ["Err_Something"] = "Algo deu errado",

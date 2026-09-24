@@ -154,8 +154,8 @@ re-locks apps that aren't currently running.
 
 ## Packaging notes
 
-The installer is framework-dependent and checks for the **.NET Desktop Runtime 8
-(x64)**. For a single-file, no-prerequisite installer, either (a) bundle the
-runtime installer and chain it, or (b) publish self-contained (larger). The
-project is code-signing ready: sign `dist\app\*.exe` and the final setup `.exe`
+The executables are published self-contained (`tools\publish.ps1`), so the
+.NET 8 runtime ships inside the installer and the target machine needs no
+prerequisites. After creating the service, the installer waits for it to reach
+RUNNING and tells the user if it did not. The project is code-signing ready: sign `dist\app\*.exe` and the final setup `.exe`
 with your Authenticode certificate before distribution.

@@ -1,6 +1,6 @@
-# Publishes the three shipping executables (framework-dependent, win-x64) into
-# dist\app, ready for the installer to package. Requires the .NET Desktop Runtime
-# 8 on the target machine (the installer verifies this).
+# Publishes the three shipping executables (self-contained, win-x64) into
+# dist\app, ready for the installer to package. The .NET 8 runtime ships inside
+# the output, so the target machine needs nothing preinstalled.
 $ErrorActionPreference = "Stop"
 $root = Split-Path $PSScriptRoot -Parent
 $out = Join-Path $root "dist\app"
@@ -16,7 +16,7 @@ $projects = @(
 
 foreach ($proj in $projects) {
     Write-Host "Publishing $proj ..."
-    dotnet publish (Join-Path $root $proj) -c Release -r win-x64 --self-contained false `
+    dotnet publish (Join-Path $root $proj) -c Release -r win-x64 --self-contained true `
         -p:PublishSingleFile=false -p:DebugType=none -o $out --nologo | Out-Null
     if ($LASTEXITCODE -ne 0) { throw "Publish failed for $proj" }
 }

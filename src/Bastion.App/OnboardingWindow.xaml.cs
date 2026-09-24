@@ -95,14 +95,22 @@ public partial class OnboardingWindow : Window
 
         NextBtn.IsEnabled = false;
         var resp = await SessionState.Current.Client.SetMasterPasswordAsync(Pwd1.Password);
-        NextBtn.IsEnabled = true;
 
         if (resp.Status == ResponseStatus.Ok || resp.Status == ResponseStatus.AlreadyConfigured)
         {
+            NextBtn.IsEnabled = true;
             _masterSet = true;
             return true;
         }
-        Step2Fail(resp.Status == ResponseStatus.Error ? Loc.S("Onb_ServiceDown") : Loc.S("Onb_PwdFailed"));
+        // Error covers both "pipe unreachable" and "service threw" — ping to tell them apart.
+        bool serviceDown = resp.Status == ResponseStatus.Error && !await SessionState.Current.Client.IsReachableAsync();
+        NextBtn.IsEnabled = true;
+        if (serviceDown)
+            Step2Fail(Loc.S("Onb_ServiceDown"));
+        else
+            Step2Fail(string.IsNullOrWhiteSpace(resp.Message)
+                ? Loc.S("Onb_PwdFailed")
+                : $"{Loc.S("Onb_PwdFailed")} ({resp.Message})");
         return false;
     }
 
